@@ -1,0 +1,26 @@
+{
+  "name": "ts-node-lessons",
+  "version": "1.0.0",
+  "description": "TypeScript and Node.js lessons",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc": "tsc -w -p tsconfig.json",
+    "l1": "nodemon ./src/lesson1/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devlee/ts-node-lessons.git"
+  },
+  "author": "devlee",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/devlee/ts-node-lessons/issues"
+  },
+  "homepage": "https://github.com/devlee/ts-node-lessons#readme",
+  "devDependencies": {
+    "@types/node": "^8.0.15",
+    "nodemon": "^1.11.0",
+    "typescript": "^2.4.2"
+  }
+}
