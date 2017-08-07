@@ -1,31 +1,28 @@
-import * as http from 'http';
-import * as fs from 'fs';
-import * as path from 'path';
+import * as Koa from 'koa';
 
-let favicon;
+const app = new Koa();
 
-/**
- * http.Server类继承自net.Server类
- */
-const httpServer = http.createServer((req, res) => {
-  console.log(req.url);
-  if (req.url === '/favicon.ico') {
-    const t1 = process.hrtime();
-    if (!favicon) {
-      favicon = fs.readFileSync(path.join(__dirname, '../../favicon.ico'), 'binary');
-    }
-    const diff = process.hrtime(t1);
-    console.log('time', `${diff[0]}秒${diff[1]}纳秒`);
-    res.writeHead(200, {
-      'Content-Type': 'image/ico',
-    });
-    res.write(favicon, 'binary');
-    res.end();
-  } else {
-    res.end('hello world');
-  }
+// x-response-time
+app.use(async (ctx, next) => {
+  const start = process.hrtime();
+  await next();
+  const diff = process.hrtime(start);
+  ctx.set('X-Response-Time', `${diff}`);
 });
 
-httpServer.listen(3000, () => {
-  console.log('app start at port 3000');
+// logger
+app.use(async (ctx, next) => {
+  const start = process.hrtime();
+  await next();
+  const diff = process.hrtime(start);
+  console.log(`${ctx.method} ${ctx.url} - ${diff}`);
+});
+
+// response
+app.use(async ctx => {
+  ctx.body = 'Hello World';
+});
+
+app.listen(3000, () => {
+  console.log('koa app start at port 3000');
 });

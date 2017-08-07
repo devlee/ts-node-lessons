@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc -w -p tsconfig.json",
-    "l1": "nodemon ./src/lesson1/index.js"
+    "l1": "nodemon ./src/lesson1/index.js",
+    "l2": "nodemon ./src/lesson2/index.js"
   },
   "repository": {
     "type": "git",
@@ -19,8 +20,12 @@
   },
   "homepage": "https://github.com/devlee/ts-node-lessons#readme",
   "devDependencies": {
+    "@types/koa": "^2.0.39",
     "@types/node": "^8.0.15",
     "nodemon": "^1.11.0",
     "typescript": "^2.4.2"
+  },
+  "dependencies": {
+    "koa": "^2.3.0"
   }
 }
