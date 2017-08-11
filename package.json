@@ -7,7 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc -w -p tsconfig.json",
     "l1": "nodemon ./src/lesson1/index.js",
-    "l2": "nodemon ./src/lesson2/index.js"
+    "l2": "nodemon ./src/lesson2/index.js",
+    "l3": "nodemon ./src/lesson3/server/index.js",
+    "b3": "webpack --config ./src/lesson3/webpack/webpack.client.config.js"
   },
   "repository": {
     "type": "git",
@@ -22,10 +24,21 @@
   "devDependencies": {
     "@types/koa": "^2.0.39",
     "@types/node": "^8.0.15",
+    "@types/react": "^16.0.2",
+    "@types/react-dom": "^15.5.2",
+    "@types/webpack": "^3.0.7",
+    "@types/webpack-dev-middleware": "^1.9.2",
+    "awesome-typescript-loader": "^3.2.2",
     "nodemon": "^1.11.0",
-    "typescript": "^2.4.2"
+    "tslint": "^5.6.0",
+    "tslint-react": "^3.2.0",
+    "typescript": "^2.4.2",
+    "webpack": "^2.7.0",
+    "webpack-dev-middleware": "^1.12.0"
   },
   "dependencies": {
-    "koa": "^2.3.0"
+    "koa": "^2.3.0",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
   }
 }

@@ -10,5 +10,8 @@
       "es2015",
       "dom"
     ]
-  }
+  },
+  "include": [
+    "./src/lesson3/client/**/*"
+  ]
 }
