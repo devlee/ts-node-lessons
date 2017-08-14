@@ -1,5 +1,7 @@
 import * as Koa from 'koa';
+
 import * as webpack from 'webpack';
+
 import * as webpackDevMiddleware from 'webpack-dev-middleware';
 
 export default (compiler: webpack.Compiler, opts?: webpackDevMiddleware.Options) => {
