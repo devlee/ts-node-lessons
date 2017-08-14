@@ -12,7 +12,8 @@
     ]
   },
   "include": [
-    "../../../src/lesson3/@types/*",
-    "../../../src/lesson3/client/**/*"
+    "../@types/*",
+    "../client/**/*",
+    "../server/**.*"
   ]
 }

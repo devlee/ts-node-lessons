@@ -9,7 +9,9 @@
     "l1": "nodemon ./src/lesson1/index.js",
     "l2": "nodemon ./src/lesson2/index.js",
     "l3": "nodemon ./src/lesson3/server/index.js",
-    "b3": "webpack --config ./src/lesson3/webpack/webpack.client.config.js"
+    "b3": "webpack --config ./src/lesson3/webpack/webpack.client.config.js",
+    "b3s": "webpack --config ./src/lesson3/webpack/webpack.server.config.js",
+    "l4": "nodemon ./bundle/lesson3/server/server-bundle.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +24,7 @@
   },
   "homepage": "https://github.com/devlee/ts-node-lessons#readme",
   "devDependencies": {
+    "@types/extract-text-webpack-plugin": "^2.1.0",
     "@types/koa": "^2.0.39",
     "@types/koa-compress": "^2.0.6",
     "@types/node": "^8.0.15",
@@ -30,12 +33,21 @@
     "@types/webpack": "^3.0.7",
     "@types/webpack-dev-middleware": "^1.9.2",
     "awesome-typescript-loader": "^3.2.2",
+    "css-loader": "^0.28.4",
+    "extract-text-webpack-plugin": "^2.1.2",
+    "isomorphic-style-loader": "^3.0.0",
     "nodemon": "^1.11.0",
+    "postcss-cssnext": "^3.0.2",
+    "postcss-import": "^10.0.0",
+    "postcss-loader": "^2.0.6",
+    "postcss-nested": "^2.1.1",
+    "style-loader": "^0.18.2",
     "tslint": "^5.6.0",
     "tslint-react": "^3.2.0",
     "typescript": "^2.4.2",
     "webpack": "^2.7.0",
-    "webpack-dev-middleware": "^1.12.0"
+    "webpack-dev-middleware": "^1.12.0",
+    "webpack-node-externals": "^1.6.0"
   },
   "dependencies": {
     "koa": "^2.3.0",

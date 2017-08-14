@@ -29,6 +29,7 @@ app.use(async (ctx) => {
       <head>
         <meta name="theme-color" content="#317EFB"/>
         <title>hello world</title>
+        <link rel="stylesheet" type="text/css" href="/assets/lesson3/vendor.css" />
       </head>
       <body>
         <div id="app">${html}</div>

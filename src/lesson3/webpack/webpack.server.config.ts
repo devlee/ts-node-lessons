@@ -2,6 +2,8 @@ import * as path from 'path';
 
 import * as webpack from 'webpack';
 
+import * as nodeExternals from 'webpack-node-externals';
+
 import * as ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 const baseDir = path.resolve(__dirname, '../../..');
@@ -9,16 +11,13 @@ const { optimize } = webpack;
 const { CommonsChunkPlugin } = optimize;
 const config: webpack.Configuration = {
   cache: false,
-  devtool: 'source-map',
+  devtool: false,
   entry: {
-    client: [
-      './src/lesson3/client/index.tsx',
-    ],
-    vendor: [
-      'react',
-      'react-dom',
+    server: [
+      './src/lesson3/server/index.tsx',
     ],
   },
+  externals: [nodeExternals()],
   module: {
     rules: [
       {
@@ -27,39 +26,37 @@ const config: webpack.Configuration = {
           {
             loader: 'awesome-typescript-loader',
             options: {
-              configFileName: './src/lesson3/webpack/tsconfig.json',
+              configFileName: './src/lesson3/webpack/tsconfig.server.json',
             },
           },
         ],
       },
       {
         test: /\.pcss$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                camelCase: true,
-                importLoaders: 1,
-                localIdentName: '[path][name]---[local]---[hash:base64:5]',
-                modules: true,
-              },
+        use: [
+          'isomorphic-style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              camelCase: true,
+              importLoaders: 1,
+              localIdentName: '[path][name]---[local]---[hash:base64:5]',
+              modules: true,
             },
-            {
-              loader: 'postcss-loader',
-              options: {
-                plugins: () => [
-                  require('postcss-import')({
-                    path: path.join(baseDir, './src/lesson3/client/style'),
-                  }),
-                  require('postcss-cssnext'),
-                  require('postcss-nested'),
-                ],
-              },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: () => [
+                require('postcss-import')({
+                  path: path.join(baseDir, './src/lesson3/client/style'),
+                }),
+                require('postcss-cssnext'),
+                require('postcss-nested'),
+              ],
             },
-          ],
-        }),
+          },
+        ],
       },
       {
         test: /\.css$/,
@@ -72,17 +69,18 @@ const config: webpack.Configuration = {
       },
     ],
   },
+  node: {
+    __dirname: true,
+    __filename: true,
+  },
   output: {
-    filename: '[name].js',
-    path: path.resolve(baseDir, './bundle/lesson3'),
-    publicPath: "/assets/lesson3/",
+    filename: 'server-bundle.js',
+    libraryTarget: 'commonjs2',
+    path: path.resolve(baseDir, './bundle/lesson3/server'),
+    publicPath: '/assets/lesson3/',
   },
   plugins: [
     new ExtractTextPlugin('vendor.css'),
-    new CommonsChunkPlugin({
-      filename: 'vendor.js',
-      name: 'vendor',
-    }),
   ],
   resolve: {
     alias: {
@@ -92,9 +90,7 @@ const config: webpack.Configuration = {
     },
     extensions: [".ts", ".tsx", ".js", ".json"],
   },
-  stats: {
-    errorDetails: true,
-  },
+  target: 'node',
 };
 
 export default config;
