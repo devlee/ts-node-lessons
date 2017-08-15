@@ -7,6 +7,8 @@ import * as ExtractTextPlugin from 'extract-text-webpack-plugin';
 const baseDir = path.resolve(__dirname, '../../..');
 const { optimize } = webpack;
 const { CommonsChunkPlugin } = optimize;
+const extractCSS = new ExtractTextPlugin('vendor.css');
+const extractPostCSS = new ExtractTextPlugin('client.css');
 const config: webpack.Configuration = {
   cache: false,
   devtool: 'source-map',
@@ -15,6 +17,7 @@ const config: webpack.Configuration = {
       './src/lesson3/client/index.tsx',
     ],
     vendor: [
+      './src/lesson3/client/style/index.css',
       'react',
       'react-dom',
     ],
@@ -34,7 +37,7 @@ const config: webpack.Configuration = {
       },
       {
         test: /\.pcss$/,
-        use: ExtractTextPlugin.extract({
+        use: extractPostCSS.extract({
           fallback: 'style-loader',
           use: [
             {
@@ -63,7 +66,7 @@ const config: webpack.Configuration = {
       },
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
+        use: extractCSS.extract({
           fallback: 'style-loader',
           use: [
             'css-loader',
@@ -78,7 +81,8 @@ const config: webpack.Configuration = {
     publicPath: "/assets/lesson3/",
   },
   plugins: [
-    new ExtractTextPlugin('vendor.css'),
+    extractCSS,
+    extractPostCSS,
     new CommonsChunkPlugin({
       filename: 'vendor.js',
       name: 'vendor',
