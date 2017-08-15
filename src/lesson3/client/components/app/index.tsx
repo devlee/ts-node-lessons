@@ -18,11 +18,26 @@ class App extends React.PureComponent {
   public render() {
     console.log('[Component Render] App');
     const images = {
-      gif,
-      jpg,
-      png,
-      svg,
-      webp,
+      gif: {
+        lazy: true,
+        value: gif,
+      },
+      jpg: {
+        lazy: true,
+        value: jpg,
+      },
+      png: {
+        lazy: true,
+        value: png,
+      },
+      svg: {
+        lazy: false,
+        value: svg,
+      },
+      webp: {
+        lazy: true,
+        value: webp,
+      },
     };
     return (
       <div className={styles.root}>
@@ -31,7 +46,7 @@ class App extends React.PureComponent {
           {
             Object.keys(images).map((k) => (
               <li key={k}>
-                <Image className={styles.img} src={images[k]} />
+                <Image className={styles.img} src={images[k].value} lazy={images[k].lazy} />
               </li>
             ))
           }
