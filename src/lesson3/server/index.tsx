@@ -28,7 +28,7 @@ app.use(async (ctx) => {
     <html lang="zh-cn">
       <head>
         <meta name="theme-color" content="#317EFB"/>
-        <title>hello world</title>
+        <title>hello world${html ? ' SSR' : ''}</title>
         <link rel="stylesheet" type="text/css" href="/assets/lesson3/vendor.css" />
         <link rel="stylesheet" type="text/css" href="/assets/lesson3/client.css" />
       </head>
