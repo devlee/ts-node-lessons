@@ -27,3 +27,8 @@ declare module '*.jpg' {
   const content: any;
   export = content;
 }
+
+declare module 'module' {
+  const content: any;
+  export = content;
+}

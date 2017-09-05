@@ -4,16 +4,18 @@ import * as webpack from 'webpack';
 
 import * as nodeExternals from 'webpack-node-externals';
 
+import { cloneDeep } from 'lodash';
+
 import baseConfig, { cssLoader, getTsRule, postcssLoader } from './webpack.base.config';
 
 const baseDir = path.resolve(__dirname, '../../..');
-
+const newBaseConfig = cloneDeep(baseConfig);
 const config: webpack.Configuration = {
-  ...baseConfig,
+  ...newBaseConfig,
   devtool: false,
   entry: {
     server: [
-      './src/lesson3/server/index.tsx',
+      './src/lesson3/server/app.tsx',
     ],
   },
   externals: [nodeExternals()],
@@ -22,7 +24,7 @@ const config: webpack.Configuration = {
     __filename: true,
   },
   output: {
-    ...baseConfig.output,
+    ...newBaseConfig.output,
     filename: 'server-bundle.js',
     libraryTarget: 'commonjs2',
     path: path.resolve(baseDir, './bundle/lesson3/server'),

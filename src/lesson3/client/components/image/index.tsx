@@ -1,10 +1,12 @@
 import * as React from 'react';
 
+import * as PropTypes from 'prop-types';
+
 class Image extends React.PureComponent<any, any> {
   private static propTypes = {
-    className: React.PropTypes.string,
-    lazy: React.PropTypes.bool,
-    src: React.PropTypes.string.isRequired,
+    className: PropTypes.string,
+    lazy: PropTypes.bool,
+    src: PropTypes.string.isRequired,
   };
 
   private static defaultProps = {

@@ -4,6 +4,8 @@ import * as webpack from 'webpack';
 
 import * as ExtractTextPlugin from 'extract-text-webpack-plugin';
 
+import { cloneDeep } from 'lodash';
+
 import baseConfig, { cssLoader, getTsRule, postcssLoader } from './webpack.base.config';
 
 const baseDir = path.resolve(__dirname, '../../..');
@@ -11,9 +13,10 @@ const { optimize } = webpack;
 const { CommonsChunkPlugin } = optimize;
 const extractCSS = new ExtractTextPlugin('vendor.css');
 const extractPostCSS = new ExtractTextPlugin('client.css');
+const newBaseConfig = cloneDeep(baseConfig);
 
 const config: webpack.Configuration = {
-  ...baseConfig,
+  ...newBaseConfig,
   devtool: 'source-map',
   entry: {
     client: [
@@ -26,7 +29,7 @@ const config: webpack.Configuration = {
     ],
   },
   output: {
-    ...baseConfig.output,
+    ...newBaseConfig.output,
     filename: '[name].js',
     path: path.resolve(baseDir, './bundle/lesson3'),
   },
