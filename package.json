@@ -11,7 +11,8 @@
     "l3": "nodemon ./src/lesson3/server/index.js",
     "b3": "webpack --config ./src/lesson3/webpack/webpack.client.config.js",
     "b3s": "webpack --config ./src/lesson3/webpack/webpack.server.config.js",
-    "l4": "nodemon ./bundle/lesson3/server/server-bundle.js"
+    "l4": "nodemon ./bundle/lesson3/server/server-bundle.js",
+    "dev": "npm run l3"
   },
   "repository": {
     "type": "git",

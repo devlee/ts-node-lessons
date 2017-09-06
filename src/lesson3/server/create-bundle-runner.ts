@@ -50,13 +50,10 @@ function compileModule(files, basedir) {
     const compiledWrapper = script.runInNewContext(context);
     const m = { exports: {} };
     const r = (file) => {
-      /* eslint-disable no-param-reassign */
       file = path.join('.', file);
       if (files[file]) {
         return evaluateModule(file, context, evaluatedModules);
       } else if (basedir) {
-        /* eslint-disable global-require */
-        /* eslint-disable import/no-dynamic-require */
         return require(
           reoslvedModules[file] ||
           (reoslvedModules[file] = resolve.sync(file, { basedir })),

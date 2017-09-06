@@ -15,7 +15,7 @@ const config: webpack.Configuration = {
   devtool: false,
   entry: {
     server: [
-      './src/lesson3/server/app.tsx',
+      './src/lesson3/server/bundle.tsx',
     ],
   },
   externals: [nodeExternals()],

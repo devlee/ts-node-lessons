@@ -10,17 +10,15 @@ import WebpackDevServer from '../webpack/webpack-dev-server';
 
 import createBundleRunner from './create-bundle-runner';
 
-import bundleClientAppForServer from '../webpack/bundle-client-app-for-server';
-
 const app = new Koa();
 
 app.use(compress());
 
-let clientApp = null;
+let serverBundleRes = null;
 
 const resolve = (file) => path.resolve(__dirname, file);
 
-function initClientApp() {
+function runServerBundle() {
   const bundle = fs.readFileSync(resolve('../../../bundle/lesson3/server/server-bundle.js'), 'utf-8');
   const ssrBundle = '__ssr_bundle__';
   const run = createBundleRunner(ssrBundle, {
@@ -28,29 +26,24 @@ function initClientApp() {
   });
   run()
   .then((res) => {
-    clientApp = res;
+    serverBundleRes = res;
   })
   .catch((err) => {
-    // eslint-disable-next-line no-console
     console.error(err);
   });
 }
 
-WebpackDevServer(app, () => { bundleClientAppForServer(initClientApp); });
+WebpackDevServer(app, runServerBundle);
 
 // response
 app.use(async (ctx) => {
-  if (!clientApp) {
-    return ctx.body = 'waiting for server-bundler ...';
-  }
-
   const { url } = ctx.req;
 
   if (url !== '/') {
     return ctx.body = '';
   }
 
-  const html = Math.random() > 0.5 ? clientApp.render() : '';
+  const html = Math.random() > 0.5 ? serverBundleRes && serverBundleRes.render() : '';
   ctx.body = `
     <!DOCTYPE html>
     <html lang="zh-cn">
