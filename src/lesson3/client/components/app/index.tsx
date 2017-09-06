@@ -41,7 +41,7 @@ class App extends React.PureComponent {
     };
     return (
       <div className={styles.root}>
-        Hello World 12
+        Hello World
         <ul>
           {
             Object.keys(images).map((k) => (
