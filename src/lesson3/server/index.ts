@@ -14,10 +14,12 @@ const app = new Koa();
 
 app.use(compress());
 
+// 这个就是服务端打包代码（将客户端相关代码打包给服务端使用的代码）运行后返回的相关结果对象
 let serverBundleRes = null;
 
 const resolve = (file) => path.resolve(__dirname, file);
 
+// 执行服务端打包代码
 function runServerBundle() {
   const bundle = fs.readFileSync(resolve('../../../bundle/lesson3/server/server-bundle.js'), 'utf-8');
   const ssrBundle = '__ssr_bundle__';
@@ -26,6 +28,7 @@ function runServerBundle() {
   });
   run()
   .then((res) => {
+    // 返回结果进行赋值
     serverBundleRes = res;
   })
   .catch((err) => {
