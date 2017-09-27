@@ -15,7 +15,6 @@ export default {
         <App context={context} />
       </AppContainer>
     ));
-    console.log(css);
     const style = css.join('');
     return {
       html,

@@ -6,11 +6,11 @@ import { AppContainer } from 'react-hot-loader';
 
 import App from './components/app/index';
 
-function renderApp() {
+function renderApp(Comp) {
   render(
     (
       <AppContainer>
-        <App context={{ insertCss: () => { /*todo*/ }}}/>
+        <Comp context={{ insertCss: () => { /*todo*/ }}}/>
       </AppContainer>
     ),
     document.getElementById('app'),
@@ -18,17 +18,12 @@ function renderApp() {
 }
 
 window.onload = () => {
-  renderApp();
+  renderApp(App);
 
   if ((module as any).hot) {
     (module as any).hot.accept('./components/app/index', () => {
       const NextApp = require('./components/app/index').default;
-      render(
-        <AppContainer>
-          <NextApp context={{ insertCss: () => { /*todo*/ }}}/>
-        </AppContainer>,
-        document.getElementById('app'),
-      );
+      renderApp(NextApp);
     });
   }
 };
