@@ -23,9 +23,21 @@ const imageRule = {
   ],
 };
 
+const jsonRule = {
+  test: /\.json/,
+  use: [
+    {
+      loader: 'json-loader',
+    },
+  ],
+};
+
 export const getTsRule = (configFileName) => ({
   test: /\.tsx?$/,
   use: [
+    {
+      loader: 'react-hot-loader/webpack',
+    },
     {
       loader: 'awesome-typescript-loader',
       options: {
@@ -66,6 +78,7 @@ const config: webpack.Configuration = {
   module: {
     rules: [
       imageRule,
+      jsonRule,
     ],
   },
   output: {

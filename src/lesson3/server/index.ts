@@ -1,5 +1,9 @@
 import * as Koa from 'koa';
 
+import * as KoaRouter from 'koa-router';
+
+import * as KoaFavicon from 'koa-favicon';
+
 import * as fs from 'fs';
 
 import * as path from 'path';
@@ -11,6 +15,7 @@ import WebpackDevServer from '../webpack/webpack-dev-server';
 import createBundleRunner from './create-bundle-runner';
 
 const app = new Koa();
+const router = new KoaRouter();
 
 app.use(compress());
 
@@ -36,17 +41,9 @@ function runServerBundle() {
   });
 }
 
-WebpackDevServer(app, runServerBundle);
-
-// response
-app.use(async (ctx) => {
-  const { url } = ctx.req;
-
-  if (url !== '/') {
-    return ctx.body = '';
-  }
-
+router.get('/*', (ctx: Koa.Context, next) => {
   const html = Math.random() > 0.5 ? serverBundleRes && serverBundleRes.render() : '';
+  ctx.type = 'html';
   ctx.body = `
     <!DOCTYPE html>
     <html lang="zh-cn">
@@ -63,8 +60,16 @@ app.use(async (ctx) => {
       </body>
     </html>
   `;
+  next();
 });
 
-app.listen(3000, () => {
+WebpackDevServer(app, runServerBundle);
+
+app.use(KoaFavicon(path.join(__dirname, '../public/favicon.ico')));
+
+app.use(router.routes())
+   .use(router.allowedMethods());
+
+app.listen(7878, () => {
   console.log('koa app start at port 3000');
 });

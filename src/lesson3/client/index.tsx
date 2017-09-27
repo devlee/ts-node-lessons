@@ -2,12 +2,16 @@ import * as React from 'react';
 
 import { render } from 'react-dom';
 
-import App from './components/app';
+import { AppContainer } from 'react-hot-loader';
+
+import App from './components/app/index';
 
 function renderApp() {
   render(
     (
-      <App />
+      <AppContainer>
+        <App />
+      </AppContainer>
     ),
     document.getElementById('app'),
   );
@@ -15,4 +19,16 @@ function renderApp() {
 
 window.onload = () => {
   renderApp();
+
+  if ((module as any).hot) {
+    (module as any).hot.accept('./components/app/index', () => {
+      const NextApp = require('./components/app/index').default;
+      render(
+        <AppContainer>
+          <NextApp />
+        </AppContainer>,
+        document.getElementById('app'),
+      );
+    });
+  }
 };

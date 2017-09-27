@@ -17,7 +17,7 @@ const newBaseConfig = cloneDeep(baseConfig);
 
 const config: webpack.Configuration = {
   ...newBaseConfig,
-  devtool: 'source-map',
+  devtool: 'eval',
   entry: {
     client: [
       './src/lesson3/client/index.tsx',
