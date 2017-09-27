@@ -10,7 +10,7 @@ function renderApp(Comp) {
   (ReactDOM as any).hydrate(
     (
       <AppContainer>
-        <Comp context={{ insertCss: () => { /*todo*/ }}}/>
+        <Comp context={{ insertCss: () => { /*nothing*/ }}}/>
       </AppContainer>
     ),
     document.getElementById('app'),
