@@ -89,8 +89,6 @@ const config: webpack.Configuration = {
   resolve: {
     alias: {
       '@client': path.resolve(baseDir, './src/lesson3/client'),
-      'react': path.resolve(baseDir, './node_modules/react/dist/react.js'),
-      'react-dom': path.resolve(baseDir, './node_modules/react-dom/dist/react-dom.js'),
     },
     extensions: [".ts", ".tsx", ".js", ".json"],
   },

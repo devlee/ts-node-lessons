@@ -1,13 +1,13 @@
 import * as React from 'react';
 
-import { render } from 'react-dom';
+import * as ReactDOM from 'react-dom';
 
 import { AppContainer } from 'react-hot-loader';
 
 import App from './components/app/index';
 
 function renderApp(Comp) {
-  render(
+  (ReactDOM as any).hydrate(
     (
       <AppContainer>
         <Comp context={{ insertCss: () => { /*todo*/ }}}/>
