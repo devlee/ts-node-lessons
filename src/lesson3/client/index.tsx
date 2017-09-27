@@ -10,7 +10,7 @@ function renderApp() {
   render(
     (
       <AppContainer>
-        <App />
+        <App context={{ insertCss: () => { /*todo*/ }}}/>
       </AppContainer>
     ),
     document.getElementById('app'),
@@ -25,7 +25,7 @@ window.onload = () => {
       const NextApp = require('./components/app/index').default;
       render(
         <AppContainer>
-          <NextApp />
+          <NextApp context={{ insertCss: () => { /*todo*/ }}}/>
         </AppContainer>,
         document.getElementById('app'),
       );

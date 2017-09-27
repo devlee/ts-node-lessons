@@ -1,7 +1,7 @@
 {
   "watch": [
-    "./src/lesson3/server",
-    "./src/lesson3/webpack"
+    "./dist/lesson3/server",
+    "./dist/lesson3/webpack"
   ],
   "ignore": [
     "*/*.ts",

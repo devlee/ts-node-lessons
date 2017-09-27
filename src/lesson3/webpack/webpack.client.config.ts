@@ -15,6 +15,10 @@ const extractCSS = new ExtractTextPlugin('vendor.css');
 const extractPostCSS = new ExtractTextPlugin('client.css');
 const newBaseConfig = cloneDeep(baseConfig);
 
+(process as any).NODE_ENV = (process as any).NODE_ENV || 'development';
+
+const isDev = (process as any).NODE_ENV === 'development';
+
 const config: webpack.Configuration = {
   ...newBaseConfig,
   devtool: 'eval',
@@ -35,7 +39,7 @@ const config: webpack.Configuration = {
   },
 };
 
-const pcssRule = {
+const pcssRuleWithEx = {
   test: /\.pcss$/,
   use: extractPostCSS.extract({
     fallback: 'style-loader',
@@ -45,6 +49,19 @@ const pcssRule = {
     ],
   }),
 };
+
+const pcssRuleWithOutEx = {
+  test: /\.pcss$/,
+  use: [
+    {
+      loader: 'style-loader',
+    },
+    cssLoader,
+    postcssLoader,
+  ],
+};
+
+const pcssRule = isDev ? pcssRuleWithOutEx : pcssRuleWithEx;
 
 const cssRule = {
   test: /\.css$/,
@@ -64,11 +81,14 @@ const cssRule = {
 
 config.plugins.push(
   extractCSS,
-  extractPostCSS,
   new CommonsChunkPlugin({
     filename: 'vendor.js',
     name: 'vendor',
   }),
 );
+
+if (!isDev) {
+  config.plugins.push(extractPostCSS);
+}
 
 export default config;

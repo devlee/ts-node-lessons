@@ -17,8 +17,6 @@ import createBundleRunner from './create-bundle-runner';
 const app = new Koa();
 const router = new KoaRouter();
 
-app.use(compress());
-
 // 这个就是服务端打包代码（将客户端相关代码打包给服务端使用的代码）运行后返回的相关结果对象
 let serverBundleRes = null;
 
@@ -42,19 +40,19 @@ function runServerBundle() {
 }
 
 router.get('/*', (ctx: Koa.Context, next) => {
-  const html = Math.random() > 0.5 ? serverBundleRes && serverBundleRes.render() : '';
+  const result = serverBundleRes ? serverBundleRes.render() : '';
   ctx.type = 'html';
   ctx.body = `
     <!DOCTYPE html>
     <html lang="zh-cn">
       <head>
         <meta name="theme-color" content="#317EFB"/>
-        <title>hello world${html ? ' SSR' : ''}</title>
+        <title>hello world${result ? ' SSR' : ''}</title>
         <link rel="stylesheet" type="text/css" href="/assets/lesson3/vendor.css" />
-        <link rel="stylesheet" type="text/css" href="/assets/lesson3/client.css" />
+        ${result ? `<style>${result.style}</style>` : ''}
       </head>
       <body>
-        <div id="app">${html}</div>
+        <div id="app">${result ? result.html : ''}</div>
         <script src="/assets/lesson3/vendor.js"></script>
         <script src="/assets/lesson3/client.js"></script>
       </body>
@@ -65,11 +63,13 @@ router.get('/*', (ctx: Koa.Context, next) => {
 
 WebpackDevServer(app, runServerBundle);
 
+app.use(compress());
+
 app.use(KoaFavicon(path.join(__dirname, '../public/favicon.ico')));
 
 app.use(router.routes())
    .use(router.allowedMethods());
 
-app.listen(7878, () => {
+app.listen(3000, () => {
   console.log('koa app start at port 3000');
 });
