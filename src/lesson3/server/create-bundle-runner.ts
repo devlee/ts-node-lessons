@@ -71,6 +71,9 @@ function compileModule(files, basedir) {
       if (files[file]) {
         return evaluateModule(file, context, evaluatedModules);
       } else if (basedir) {
+        if (file.indexOf('.server-bundle') > -1) {
+          file = './' + file;
+        }
         return require(
           reoslvedModules[file] ||
           (reoslvedModules[file] = resolve.sync(file, { basedir })),

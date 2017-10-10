@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
-import * as styles from '@client/components/app/style.pcss';
+import * as styles from '@client/components/home-page/style.pcss';
 
 import * as png from '@client/style/image/react-ts.png';
 
@@ -16,8 +16,10 @@ import * as jpg from '@client/style/image/TypeScript.jpg';
 
 import Image from '../image';
 
+import { Link } from 'react-router-dom';
+
 @withStyles(styles)
-class App extends React.PureComponent<any, any> {
+class HomePage extends React.PureComponent<any, any> {
   public render() {
     console.log('[Component Render] App');
     const images = {
@@ -54,9 +56,10 @@ class App extends React.PureComponent<any, any> {
             ))
           }
         </ul>
+        <Link to="/about">about</Link>
       </div>
     );
   }
 }
 
-export default App;
+export default HomePage;

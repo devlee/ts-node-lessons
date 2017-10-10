@@ -28,7 +28,7 @@ function runServerBundle() {
   const ssrBundle = '__ssr_bundle__';
   const run = createBundleRunner(ssrBundle, {
     [ssrBundle]: bundle,
-  });
+  }, path.join(__dirname, '../../../bundle/lesson3/server/'));
   run()
   .then((res) => {
     // 返回结果进行赋值
@@ -40,32 +40,35 @@ function runServerBundle() {
 }
 
 router.get('/*', (ctx: Koa.Context, next) => {
-  const result = serverBundleRes ? serverBundleRes.render() : '';
-  ctx.type = 'html';
-  ctx.body = `
-    <!DOCTYPE html>
-    <html lang="zh-cn">
-      <head>
-        <meta name="theme-color" content="#317EFB"/>
-        <title>hello world${result ? ' SSR' : ''}</title>
-        <link rel="stylesheet" type="text/css" href="/assets/lesson3/vendor.css" />
-        ${result ? `<style>${result.style}</style>` : ''}
-      </head>
-      <body>
-        <div id="app">${result ? result.html : ''}</div>
-        <script src="/assets/lesson3/vendor.js"></script>
-        <script src="/assets/lesson3/client.js"></script>
-      </body>
-    </html>
-  `;
-  next();
+  if (typeof serverBundleRes === 'function') {
+    serverBundleRes(ctx, next);
+  } else {
+    const result = '';
+    ctx.type = 'html';
+    ctx.body = `
+      <!DOCTYPE html>
+      <html lang="zh-cn">
+        <head>
+          <meta name="theme-color" content="#317EFB"/>
+          <title>hello world${result ? ' SSR' : ''}</title>
+          <link rel="stylesheet" type="text/css" href="/assets/lesson3/vendor.css" />
+        </head>
+        <body>
+          <div id="app"></div>
+          <script src="/assets/lesson3/vendor.js"></script>
+          <script src="/assets/lesson3/client.js"></script>
+        </body>
+      </html>
+    `;
+    next();
+  }
 });
 
 WebpackDevServer(app, runServerBundle);
 
 app.use(compress());
 
-app.use(KoaFavicon(path.join(__dirname, '../public/favicon.ico')));
+app.use(KoaFavicon(path.join(__dirname, '../../../public/favicon.ico')));
 
 app.use(router.routes())
    .use(router.allowedMethods());
