@@ -15,9 +15,9 @@ const extractCSS = new ExtractTextPlugin('vendor.css');
 const extractPostCSS = new ExtractTextPlugin('client.css');
 const newBaseConfig = cloneDeep(baseConfig);
 
-(process as any).NODE_ENV = (process as any).NODE_ENV || 'development';
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-const isDev = (process as any).NODE_ENV === 'development';
+const isDev = process.env.NODE_ENV === 'development';
 
 const config: webpack.Configuration = {
   ...newBaseConfig,
