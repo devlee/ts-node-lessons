@@ -25,7 +25,7 @@ export default (ctx: Koa.Context, next) => {
   const context = { insertCss: (...styles) => styles.forEach((s) => css.push(s._getCss())) };
   const history = createHistory();
   const store = configureStore(history);
-  const context2 = {};
+  const context2: any = {};
 
   const Comp = () => (
     <Provider store={store}>
@@ -37,6 +37,11 @@ export default (ctx: Koa.Context, next) => {
       </StaticRouter>
     </Provider>
   );
+
+  if (context2.url) {
+    ctx.redirect(context2.url);
+    return next();
+  }
 
   const html = renderToString((
     <AppContainer>
@@ -62,4 +67,6 @@ export default (ctx: Koa.Context, next) => {
       </body>
     </html>
   `;
+
+  next();
 };
